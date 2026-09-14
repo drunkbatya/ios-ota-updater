@@ -1,0 +1,8 @@
+{
+  "version": "${VERSION}",
+  "build": "${BUILD_NUMBER}",
+  "title": "${TITLE}",
+  "notes": ${NOTES_JSON},
+  "manifest": "${MANIFEST_URL}",
+  "published": "${PUBLISHED}"
+}

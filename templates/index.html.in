@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>${TITLE} ${VERSION}</title>
+        <style>
+            body {
+                font-family: -apple-system, system-ui, sans-serif; margin: 0; padding: 32px 20px; background: #111; color: #eee;
+            }
+            main {
+                max-width: 480px; margin: 0 auto;
+            }
+            h1 {
+                font-size: 28px; margin: 0 0 4px;
+            }
+            .version {
+                color: #999; margin-bottom: 24px;
+            }
+            a.install {
+                display: block; text-align: center; background: #0a84ff;
+                color: #fff; text-decoration: none; padding: 14px; border-radius: 12px; font-size: 18px; font-weight: 600;
+            }
+            pre {
+                white-space: pre-wrap; background: #1c1c1e; padding: 12px; border-radius: 8px; font-size: 14px;
+            }
+            p.hint {
+                color: #999; font-size: 14px;
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <h1>${TITLE}</h1>
+            <div class="version">${VERSION} (${BUILD_NUMBER}), ${PUBLISHED}</div>
+            <a class="install" href="itms-services://?action=download-manifest&amp;url=${MANIFEST_URL}">Install ${TITLE} ${VERSION}</a>
+            <p class="hint">Open this page in Safari on the iPhone. The device must be registered in the provisioning profile.</p>
+            <pre>${NOTES_HTML}</pre>
+            <p class="hint"><a href="${IPA_URL}" style="color:#999">${IPA_NAME}</a> / <a href="${MANIFEST_URL}" style="color:#999">manifest.plist</a></p>
+        </main>
+    </body>
+</html>
