@@ -20,6 +20,8 @@ public final class OTAUpdater {
     private let checkInterval: TimeInterval
     private let log: Logger
     private var launchCheck: Task<Void, Never>?
+    private var installObservers: [NSObjectProtocol] = []
+    public var terminatesAfterInstall = true
 
     public init(
         feedURL: URL,
@@ -85,7 +87,31 @@ public final class OTAUpdater {
 
     public func install(_ feed: UpdateFeed) {
         log.info("installing \(feed.appVersion.description, privacy: .public) from \(feed.manifest.absoluteString, privacy: .public)")
+        if terminatesAfterInstall {
+            terminateWhenInstallPromptCloses()
+        }
         UIApplication.shared.open(feed.installURL)
+    }
+
+    private func terminateWhenInstallPromptCloses() {
+        let center = NotificationCenter.default
+        for observer in installObservers {
+            center.removeObserver(observer)
+        }
+        installObservers.removeAll()
+        installObservers.append(center.addObserver(forName: UIApplication.willResignActiveNotification, object: nil, queue: .main) { [weak self] _ in
+            Task { @MainActor in
+                self?.terminateWhenActiveAgain()
+            }
+        })
+    }
+
+    private func terminateWhenActiveAgain() {
+        let center = NotificationCenter.default
+        installObservers.append(center.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: .main) { [weak self] _ in
+            self?.log.info("install prompt closed, terminating so the new bundle can replace the running one")
+            exit(0)
+        })
     }
 
     public func skip(_ feed: UpdateFeed) {

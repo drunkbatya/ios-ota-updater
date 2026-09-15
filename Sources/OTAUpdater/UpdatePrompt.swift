@@ -7,6 +7,7 @@ enum UpdatePrompt {
         if let notes = feed.notes?.trimmingCharacters(in: .whitespacesAndNewlines), !notes.isEmpty {
             message += "\n\n" + notes
         }
+        message += "\n\nThe app closes after you confirm the install; open it again once the icon finishes loading."
         let alert = UIAlertController(title: "Update available", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Update", style: .default) { _ in install() })
         if allowSkip {
