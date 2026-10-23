@@ -36,7 +36,7 @@
             <a class="install" href="itms-services://?action=download-manifest&amp;url=${MANIFEST_URL}">Install ${TITLE} ${VERSION}</a>
             <p class="hint">Open this page in Safari on the iPhone. The device must be registered in the provisioning profile. On the first launch iOS asks for Developer Mode: Settings &gt; Privacy &amp; Security &gt; Developer Mode, turn it on, restart. Updates never ask again.</p>
             <pre>${NOTES_HTML}</pre>
-            <p class="hint"><a href="${IPA_URL}" style="color:#999">${IPA_NAME}</a> / <a href="${MANIFEST_URL}" style="color:#999">manifest.plist</a></p>
+            <p class="hint"><a href="${IPA_URL}" style="color:#999">${IPA_NAME}</a> / <a href="${MANIFEST_URL}" style="color:#999">${MANIFEST_NAME}</a></p>
         </main>
     </body>
 </html>

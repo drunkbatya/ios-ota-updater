@@ -37,6 +37,7 @@ def main():
         raise SystemExit(f"ipa not found: {arguments.ipa}")
     base_url = arguments.base_url.rstrip("/")
     ipa_name = f"{arguments.title}-{arguments.version}.ipa"
+    manifest_name = f"manifest-{arguments.version}.plist"
     notes = (
         arguments.notes.read_text().strip()
         if arguments.notes and arguments.notes.is_file()
@@ -45,7 +46,8 @@ def main():
     values = {
         "IPA_NAME": ipa_name,
         "IPA_URL": f"{base_url}/{ipa_name}",
-        "MANIFEST_URL": f"{base_url}/manifest.plist",
+        "MANIFEST_NAME": manifest_name,
+        "MANIFEST_URL": f"{base_url}/{manifest_name}",
         "PUBLISHED": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "NOTES_JSON": json.dumps(notes),
         "NOTES_HTML": html.escape(notes),
@@ -62,7 +64,7 @@ def main():
     update = render("update.json.in", values)
     plistlib.loads(manifest.encode())
     json.loads(update)
-    (out / "manifest.plist").write_text(manifest)
+    (out / manifest_name).write_text(manifest)
     (out / "update.json").write_text(update)
     (out / "index.html").write_text(render("index.html.in", values))
     for path in sorted(out.iterdir()):
